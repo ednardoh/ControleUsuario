@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2024/10/25 12:26:22.000.422,=C:\Users\ednar\OneDrive\Documentos\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2025/03/15 23:49:34.000.670,=C:\Users\ednar\OneDrive\Documentos\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2025/03/15 23:50:32.000.724,C:\Users\ednar\OneDrive\Documentos\Embarcadero\Studio\Projects\Project1.dproj=C:\Sistemas\Controle de Usuarios\src\CadastroUsuario.dproj</Transaction>
+    <Transaction>2025/03/15 23:50:44.000.102,=C:\Sistemas\Controle de Usuarios\src\View\uPrincipalVIEW.pas</Transaction>
+    <Transaction>2025/03/16 00:01:23.000.302,=C:\Sistemas\Controle de Usuarios\src\Conexao\UConecta.pas</Transaction>
+    <Transaction>2025/03/16 00:01:23.000.308,=C:\Sistemas\Controle de Usuarios\src\Conexao\uConexao.pas</Transaction>
+    <Transaction>2025/03/16 00:01:27.000.874,=C:\Sistemas\Controle de Usuarios\src\Conexao\UConexaoBDpas.pas</Transaction>
+    <Transaction>2025/03/16 00:02:43.000.993,C:\Sistemas\Controle de Usuarios\src\Conexao\uConexao.pas=</Transaction>
+    <Transaction>2025/03/16 00:02:43.000.977,C:\Sistemas\Controle de Usuarios\src\Conexao\UConexaoBDpas.pas=</Transaction>
+    <Transaction>2025/03/16 00:02:44.000.008,C:\Sistemas\Controle de Usuarios\src\Conexao\UConecta.pas=</Transaction>
+    <Transaction>2025/03/16 00:03:12.000.737,=C:\Sistemas\Controle de Usuarios\src\Conexao\UConexaoBDpas.pas</Transaction>
+    <Transaction>2025/03/16 00:03:12.000.677,=C:\Sistemas\Controle de Usuarios\src\Conexao\uConexao.pas</Transaction>
+    <Transaction>2025/03/16 00:03:12.000.666,=C:\Sistemas\Controle de Usuarios\src\Conexao\UConecta.pas</Transaction>
+    <Transaction>2025/03/16 00:10:44.000.097,=C:\Sistemas\Controle de Usuarios\src\Unit1.pas</Transaction>
+    <Transaction>2025/03/16 00:11:04.000.419,C:\Sistemas\Controle de Usuarios\src\Unit1.pas=C:\Sistemas\Controle de Usuarios\src\Model\UsuarioModel.pas</Transaction>
+    <Transaction>2025/03/16 00:24:30.000.994,=C:\Sistemas\Controle de Usuarios\src\Unit1.pas</Transaction>
+    <Transaction>2025/03/16 00:24:53.000.478,C:\Sistemas\Controle de Usuarios\src\Unit1.pas=C:\Sistemas\Controle de Usuarios\src\DAO\uUsuarioDAO.pas</Transaction>
+    <Transaction>2025/03/16 00:26:33.000.812,=C:\Sistemas\Controle de Usuarios\src\Controller\uSistemaControl.pas</Transaction>
+    <Transaction>2025/03/16 00:28:04.000.574,C:\Sistemas\Controle de Usuarios\src\Model\UsuarioModel.pas=C:\Sistemas\Controle de Usuarios\src\Model\uUsuarioModel.pas</Transaction>
+    <Transaction>2025/03/16 11:10:08.000.634,=C:\Sistemas\Controle de Usuarios\src\Model\uEnumerado.pas</Transaction>
+    <Transaction>2025/03/16 11:27:40.000.645,=C:\Sistemas\Controle de Usuarios\src\Unit1.pas</Transaction>
+    <Transaction>2025/03/16 11:28:15.000.137,C:\Sistemas\Controle de Usuarios\src\Unit1.pas=C:\Sistemas\Controle de Usuarios\src\Controller\uUsuarioControl.pas</Transaction>
+    <Transaction>2025/03/16 18:24:46.000.902,=C:\Sistemas\Controle de Usuarios\src\Unit1.pas</Transaction>
+    <Transaction>2025/03/16 18:28:12.000.953,C:\Sistemas\Controle de Usuarios\src\Unit1.dfm=C:\Sistemas\Controle de Usuarios\src\View\uCadUsuarioVIEW.dfm</Transaction>
+    <Transaction>2025/03/16 18:28:12.000.953,C:\Sistemas\Controle de Usuarios\src\Unit1.pas=C:\Sistemas\Controle de Usuarios\src\View\uCadUsuarioVIEW.pas</Transaction>
+    <Transaction>2025/03/17 00:35:17.201,=C:\Sistemas\Controle de Usuarios\src\Unit1.pas</Transaction>
+    <Transaction>2025/03/17 00:35:45.160,C:\Sistemas\Controle de Usuarios\src\View\uLoginVIEW.pas=C:\Sistemas\Controle de Usuarios\src\Unit1.pas</Transaction>
+    <Transaction>2025/03/17 00:35:45.160,C:\Sistemas\Controle de Usuarios\src\View\uLoginVIEW.dfm=C:\Sistemas\Controle de Usuarios\src\Unit1.dfm</Transaction>
+  </Transactions>
+</BorlandProject>

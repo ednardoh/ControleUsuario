@@ -1,0 +1,205 @@
+unit uCadUsuarioVIEW;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf, FireDAC.Stan.Def,
+  FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Phys.FB,
+  FireDAC.Phys.FBDef, FireDAC.VCLUI.Wait, FireDAC.Stan.Param, FireDAC.DatS,
+  FireDAC.DApt.Intf, FireDAC.DApt, Data.DB, Datasnap.Provider,
+  Datasnap.DBClient, FireDAC.Phys.IBBase, FireDAC.Comp.DataSet,
+  FireDAC.Comp.Client, Vcl.StdCtrls, Vcl.Mask, Vcl.DBCtrls, Vcl.Grids,
+  Vcl.DBGrids, uUsuarioControl, uEnumerado, Vcl.ExtCtrls;
+
+type
+  TFrmCadUsuario = class(TForm)
+    TB_Usuario: TClientDataSet;
+    ds_Usuario: TDataSource;
+    DataSetProvider: TDataSetProvider;
+    TB_UsuarioID: TIntegerField;
+    TB_UsuarioNOME_USUARIO: TStringField;
+    TB_UsuarioSENHA: TStringField;
+    TB_UsuarioACESSO_LER: TStringField;
+    TB_UsuarioACESSO_GRAVAR: TStringField;
+    TB_UsuarioACESSO_DELETAR: TStringField;
+    Label1: TLabel;
+    DBE_Id: TDBEdit;
+    Label2: TLabel;
+    DBE_NomeUsuario: TDBEdit;
+    Label3: TLabel;
+    DBE_Senha: TDBEdit;
+    Label4: TLabel;
+    DBE_ACessoLer: TDBEdit;
+    DBEdit1: TDBEdit;
+    Label5: TLabel;
+    Label6: TLabel;
+    DBEdit2: TDBEdit;
+    DBG_Usuario: TDBGrid;
+    DBNavigator1: TDBNavigator;
+    Button1: TButton;
+    Button2: TButton;
+    Button3: TButton;
+    Button4: TButton;
+    Button5: TButton;
+    Button6: TButton;
+    Button7: TButton;
+    procedure FormCreate(Sender: TObject);
+    procedure TB_UsuarioBeforePost(DataSet: TDataSet);
+    procedure TB_UsuarioBeforeDelete(DataSet: TDataSet);
+    procedure Button1Click(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
+    procedure Button7Click(Sender: TObject);
+  private
+    { Private declarations }
+    FUsuario: TUsuarioControl;
+    ATipo: TAcao;
+    procedure BuscaSelect;
+    Function CRIPTO_SENHA(wStri: String): string;
+  public
+    { Public declarations }
+  end;
+
+var
+  FrmCadUsuario: TFrmCadUsuario;
+
+implementation
+
+{$R *.dfm}
+
+{ TFrmCadUsuario }
+
+procedure TFrmCadUsuario.BuscaSelect;
+begin
+  try
+    TB_Usuario.Close;
+    FUsuario := TUsuarioControl.Create;
+    DataSetProvider.DataSet := FUsuario.RetornaSQL;
+    TB_Usuario.Open;
+  finally
+     FUsuario.Free;
+  end;
+end;
+
+procedure TFrmCadUsuario.Button1Click(Sender: TObject);
+begin
+  if TB_Usuario.State in [dsInsert, dsEdit] then
+    TB_UsuarioSENHA.AsString := CRIPTO_SENHA(TB_UsuarioSENHA.AsString);
+end;
+
+procedure TFrmCadUsuario.Button2Click(Sender: TObject);
+begin
+  BuscaSelect;
+end;
+
+procedure TFrmCadUsuario.Button7Click(Sender: TObject);
+begin
+  TB_Usuario.Cancel;
+end;
+
+function TFrmCadUsuario.CRIPTO_SENHA(wStri: String): string;
+var Simbolos : array [0..4] of String;
+     x            : Integer;
+begin
+  Simbolos[1]:=
+  'ABCDEFGHIJLMNOPQRSTUVXZYWK ~!@#$%^&*()';
+
+  Simbolos[2]:=
+  'ÂÀ©Øû×ƒçêùÿ5Üø£úñÑªº¿®¬¼ëèïÙýÄÅÉæÆôöò»Á';
+
+  Simbolos[3]:='abcdefghijlmnopqrstuvxzywk1234567890';
+
+  Simbolos[4]:='áâäàåíóÇüé¾¶§÷ÎÏ-+ÌÓß¸°¨·¹³²Õµþîì¡«½';
+
+  for x := 1 to Length(Trim(wStri)) do begin
+     if pos(copy(wStri,x,1),Simbolos[1])>0 then
+        Result := Result+copy(Simbolos[2],
+                      pos(copy(wStri,x,1),Simbolos[1]),1)
+
+     else if pos(copy(wStri,x,1),Simbolos[2])>0 then
+        Result := Result+copy(Simbolos[1],
+                      pos(copy(wStri,x,1),Simbolos[2]),1)
+
+     else if pos(copy(wStri,x,1),Simbolos[3])>0 then
+        Result := Result+copy(Simbolos[4],
+                      pos(copy(wStri,x,1),Simbolos[3]),1)
+
+     else if pos(copy(wStri,x,1),Simbolos[4])>0 then
+        Result := Result+copy(Simbolos[3],
+                      pos(copy(wStri,x,1),Simbolos[4]),1);
+  end;
+end;
+
+procedure TFrmCadUsuario.FormCreate(Sender: TObject);
+begin
+  BuscaSelect;
+end;
+
+procedure TFrmCadUsuario.TB_UsuarioBeforeDelete(DataSet: TDataSet);
+begin
+  ATipo := uEnumerado.tacExcluir;
+  if MessageDlg('Deseja realmente exluir essa informação ?',mtConfirmation, [mbYes,mbNo],1) = mrYes then
+  begin
+    try
+      FUsuario := TUsuarioControl.Create;
+      FUsuario.UsuarioModel.Acao  := ATipo;
+      FUsuario.UsuarioModel.ID    := TB_UsuarioID.AsInteger;
+      FUsuario.Salvar;
+    finally
+      messagedlg('Dado Excluido com sucesso!',mtinformation,[mbok],0);
+      FUsuario.Free;
+    end;
+  end;
+  BuscaSelect;
+end;
+
+procedure TFrmCadUsuario.TB_UsuarioBeforePost(DataSet: TDataSet);
+var
+  iID: Integer;
+begin
+  if TB_Usuario.State = dsInsert then
+  begin
+    ATipo := uEnumerado.tacIncluir;
+    try
+      iID      := FUsuario.UsuarioModel.GetId;
+      FUsuario := TUsuarioControl.Create;
+      FUsuario.UsuarioModel.Acao           := ATipo;
+      FUsuario.UsuarioModel.ID             := iID;
+      FUsuario.UsuarioModel.NOME_USUARIO   := TB_UsuarioNOME_USUARIO.AsString;
+      FUsuario.UsuarioModel.SENHA          := TB_UsuarioSENHA.AsString;
+      FUsuario.UsuarioModel.ACESSO_LER     := TB_UsuarioACESSO_LER.AsString;
+      FUsuario.UsuarioModel.ACESSO_GRAVAR  := TB_UsuarioACESSO_GRAVAR.AsString;
+      FUsuario.UsuarioModel.ACESSO_DELETAR := TB_UsuarioACESSO_DELETAR.AsString;
+      FUsuario.Salvar;
+      TB_Usuario.Cancel;
+    finally
+      messagedlg('Dados gravados com sucesso!',mtinformation,[mbok],0);
+      FUsuario.Free;
+    end;
+  end
+  else
+    if TB_Usuario.State = dsEdit then
+    begin
+      ATipo := uEnumerado.tacAlterar;
+      try
+        iID      := TB_UsuarioID.AsInteger;
+        FUsuario := TUsuarioControl.Create;
+        FUsuario.UsuarioModel.Acao           := ATipo;
+        FUsuario.UsuarioModel.ID             := iID;
+        FUsuario.UsuarioModel.NOME_USUARIO   := TB_UsuarioNOME_USUARIO.AsString;
+        FUsuario.UsuarioModel.SENHA          := TB_UsuarioSENHA.AsString;
+        FUsuario.UsuarioModel.ACESSO_LER     := TB_UsuarioACESSO_LER.AsString;
+        FUsuario.UsuarioModel.ACESSO_GRAVAR  := TB_UsuarioACESSO_GRAVAR.AsString;
+        FUsuario.UsuarioModel.ACESSO_DELETAR := TB_UsuarioACESSO_DELETAR.AsString;
+        FUsuario.Salvar;
+        TB_Usuario.Cancel;
+      finally
+        messagedlg('Dados gravados com sucesso!',mtinformation,[mbok],0);
+        FUsuario.Free;
+      end;
+    end;
+  BuscaSelect;
+end;
+
+end.

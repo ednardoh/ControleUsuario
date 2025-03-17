@@ -1,0 +1,25 @@
+unit UsuarioModel;
+
+interface
+
+uses
+  uEnumerado, FireDAC.Comp.Client;
+
+type
+  TUsuarioModel = class
+    Private
+      FAcao           : TAcao;
+      FID             : Integer;
+      FNOME_USUARIO   : String;
+      FSENHA          : String;
+      FACESSO_LER     : String;
+      FACESSO_GRAVAR  : String;
+      FACESSO_DELETAR : String;
+    Public
+
+
+  end;
+
+implementation
+
+end.

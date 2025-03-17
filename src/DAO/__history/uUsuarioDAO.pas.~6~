@@ -1,0 +1,143 @@
+unit uUsuarioDAO;
+
+interface
+
+uses
+  FireDAC.Comp.Client, uConexao, uUsuarioModel, System.SysUtils, uSistemaControl,
+  uEnumerado, Data.DB, Vcl.Dialogs;
+
+type
+  TUsuarioDAO = class
+    Private
+      FConexao: TConexao;
+    Public
+    constructor Create;
+
+    function Incluir(AUsuarioModel: TUsuarioModel): Boolean;
+    function Alterar(AUsuarioModel: TUsuarioModel): Boolean;
+    function Excluir(AUsuarioModel: TUsuarioModel): Boolean;
+    function GetId: Integer;
+    function RetornaSenhaOk(Nome, Senha: String) : Boolean;
+
+  end;
+
+implementation
+
+{ TUsuarioDAO }
+
+constructor TUsuarioDAO.Create;
+begin
+  FConexao := TSistemaControl.GetInstance().Conexao
+end;
+
+function TUsuarioDAO.Incluir(AUsuarioModel: TUsuarioModel): Boolean;
+var
+  vQry: TFDQuery;
+begin
+  vQry := FConexao.CriarQuery();
+  try
+    try
+      vQry.ExecSQL('INSERT INTO TB_USUARIO(            '+
+                   '                  :ID,             '+
+                   '                  :NOME_USUARIO,   '+
+                   '                  :SENHA,          '+
+                   '                  :ACESSO_LER,     '+
+                   '                  :ACESSO_GRAVAR,  '+
+                   '                  :ACESSO_DELETAR) ',
+                    ['I',
+                     AUsuarioModel.ID,
+                     AUsuarioModel.NOME_USUARIO,
+                     AUsuarioModel.SENHA,
+                     AUsuarioModel.ACESSO_LER,
+                     AUsuarioModel.ACESSO_GRAVAR,
+                     AUsuarioModel.ACESSO_DELETAR]);
+
+      Result := True;
+    except
+    on E: Exception do
+      begin
+        Result := False;
+      end;
+    end;
+  finally
+    vQry.Free;
+  end;
+end;
+
+function TUsuarioDAO.Alterar(AUsuarioModel: TUsuarioModel): Boolean;
+var
+  vQry: TFDQuery;
+begin
+  vQry := FConexao.CriarQuery();
+  try
+    try
+      vQry.ExecSQL('UPDATE TB_USUARIO SET (                          '+
+                   '                  NOME_USUARIO  =:NOME_USUARIO,  '+
+                   '                  SENHA         =:SENHA,         '+
+                   '                  ACESSO_LER    =:ACESSO_LER,    '+
+                   '                  ACESSO_GRAVAR =:ACESSO_GRAVAR, '+
+                   '                  ACESSO_DELETAR=:ACESSO_DELETAR '+
+                   '                  WHERE ID      =:ID)            ',
+                    [AUsuarioModel.NOME_USUARIO,
+                     AUsuarioModel.SENHA,
+                     AUsuarioModel.ACESSO_LER,
+                     AUsuarioModel.ACESSO_GRAVAR,
+                     AUsuarioModel.ACESSO_DELETAR,
+                     AUsuarioModel.ID]);
+
+      Result := True;
+    except
+    on E: Exception do
+      begin
+        Result := False;
+      end;
+    end;
+  finally
+    vQry.Free;
+  end;
+end;
+
+function TUsuarioDAO.Excluir(AUsuarioModel: TUsuarioModel): Boolean;
+var
+  vQry: TFDQuery;
+begin
+  vQry := FConexao.CriarQuery();
+  try
+    try
+      vQry.ExecSQL('DELETE FROM TB_USUARIO WHERE ID=:ID ',
+                    [AUsuarioModel.ID]);
+      Result := True;
+    except
+    on E: Exception do
+      begin
+        Result := False;
+      end;
+    end;
+  finally
+    vQry.Free;
+  end;
+end;
+
+function TUsuarioDAO.GetId: Integer;
+var
+  vQry: TFDQuery;
+begin
+  vQry := FConexao.CriarQuery();
+  try
+    vQry.Open('SELECT coalesce(MAX(ID),0)+1 AS ID FROM TB_USUARIO');
+    try
+      Result := vQry.Fields[0].AsInteger;
+    finally
+      vQry.Close;
+    end;
+  finally
+    vQry.Free;
+  end;
+end;
+
+function TUsuarioDAO.RetornaSenhaOk(Nome, Senha: String): Boolean;
+begin
+  //
+end;
+
+end.

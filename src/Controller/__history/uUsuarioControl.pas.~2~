@@ -1,0 +1,19 @@
+unit uUsuarioControl;
+
+interface
+
+uses
+  uUsuarioModel, System.SysUtils, FireDAC.Comp.Client;
+
+type
+  TUsuarioControl = class
+    private
+      FUsuarioModel: TUsuarioModel;
+    Public
+
+
+  end;
+
+implementation
+
+end.

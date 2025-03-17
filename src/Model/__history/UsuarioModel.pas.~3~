@@ -1,0 +1,33 @@
+unit UsuarioModel;
+
+interface
+
+uses
+  uEnumerado, FireDAC.Comp.Client;
+
+type
+  TUsuarioModel = class
+    Private
+      FAcao           : TAcao;
+      FID             : Integer;
+      FNOME_USUARIO   : String;
+      FSENHA          : String;
+      FACESSO_LER     : String;
+      FACESSO_GRAVAR  : String;
+      FACESSO_DELETAR : String;
+
+      procedure SetAcao(const Value: TAcao);
+      procedure SetID(const Value: Integer);
+      procedure SetNOME_USUARIO(const Value: String);
+      procedure SetSENHA(const Value: String);
+      procedure SetACESSO_LER(const Value: String);
+      procedure SetACESSO_GRAVAR(const Value: String);
+      procedure SetACESSO_DELETAR(const Value: String);
+    Public
+
+
+  end;
+
+implementation
+
+end.
